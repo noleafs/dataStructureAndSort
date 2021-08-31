@@ -49,7 +49,7 @@ public class PagerFoldingTest {
                 if (dequeue.right != null) {
                     queue.enqueue(dequeue.right);
                 }
-                // 当前节点的左子节点和右子节点都为空 则是叶子节点，只需要给该节点添加左子结点和右子节点即可
+                // 当前节点的左子节点和右子节*-9+点都为空 则是叶子节点，只需要给该节点添加左子结点和右子节点即可
                 if (dequeue.left == null && dequeue.right == null) {
                     // 下折痕
                     dequeue.left = new Node<String>("down", null, null);

@@ -19,7 +19,7 @@ public class Heap<T extends Comparable<T>> {
     private int N;
 
     public Heap(int capacity) {
-        this.items = (T[]) new Object[capacity];
+        this.items = (T[]) new Comparable[capacity+1];
         this.N = 0;
     }
 
@@ -51,7 +51,17 @@ public class Heap<T extends Comparable<T>> {
      * @return
      */
     public T delMax() {
-        return null;
+        T max = items[1];
+        // 交换索引1处的元素和最大索引处的元素，让完全二叉树最右侧的元素变为临时根结点
+        exch(1, N);
+        // 删除最大索引处的元素, 这步操作 我觉得是无用的
+        items[N] = null;
+        N--;
+
+        // 现在这个堆，是无序的，需要让堆有序，通过下浮算法
+        sink(1);
+
+        return max;
     }
 
     /**
@@ -71,8 +81,11 @@ public class Heap<T extends Comparable<T>> {
      */
     private void swim(int k) {
         // 通过循环，不断的比较当前结点的值和其父结点的值，如果发现父结点的值比当前结点的值小则交换位置
-        while (k > 0 && less(k/2, k)) {
-            exch(k/2, k);
+        while (k > 1) {
+            if (less(k/2,k)){
+                exch(k/2,k);
+            }
+
             k = k/2;
         }
     }
@@ -83,7 +96,33 @@ public class Heap<T extends Comparable<T>> {
      * @param k
      */
     private void sink(int k) {
+        // 通过循环不断的对比当前k结点和  其左子结点以及右子结点中的最大值的元素大小， 如果当前结点小，则需要交换位置
+        // 如果左子结点都大于了元素个数，下一个左子结点是空的
+        while(2*k <= N) {
+            // 记录较大子结点所在的索引
+            int max;
+            if (k*2+1 <= N) {
+                // 说明有右子结点，有右子结点就肯定有左子结点，因为是完全二叉树
+                // k*2是左子结点， k*2+1是右子结点
+                if (less(k*2, k*2+1)) {
+                    max = k*2+1;
+                } else {
+                    max = k*2;
+                }
+            } else {
+                // 没有右子结点
+                max = k*2;
+            }
 
+            // 比较当前结点和较大结点的值
+            if (!less(k, max)) {
+                break;
+            }
+
+            // 交换k索引和max索引处的值，向下沉
+            exch(k, max);
+            k = max;
+        }
     }
 
 
