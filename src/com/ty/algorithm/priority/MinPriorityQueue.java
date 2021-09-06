@@ -1,12 +1,13 @@
 package com.ty.algorithm.priority;
 
 /**
- * 最大优先队列，采用堆的方式来实现
+ * 最小优先队列，采用最小堆实现
  * @author tanyun
  * @description
- * @date 2021/8/30 21:10
+ * @date 2021/9/2 19:54
  */
-public class MaxPriorityQueue<T extends Comparable<T>> {
+public class MinPriorityQueue<T extends Comparable<T>> {
+
     // 存储堆中的元素
     private T[] items;
     /**
@@ -14,7 +15,7 @@ public class MaxPriorityQueue<T extends Comparable<T>> {
      */
     private int N;
 
-    public MaxPriorityQueue(int capacity) {
+    public MinPriorityQueue(int capacity) {
         this.items = (T[]) new Comparable[capacity+1];
         this.N = 0;
     }
@@ -70,15 +71,15 @@ public class MaxPriorityQueue<T extends Comparable<T>> {
      * 删除堆中最大的元素，并返回这个最大元素
      * @return
      */
-    public T delMax() {
-        T max = items[1];
+    public T delMin() {
+        T min = items[1];
         exch(1,N);
 //        items[N] = null;
         N--;
 
         // 下层调整堆的有序
         sink(1);
-        return max;
+        return min;
     }
 
 
@@ -88,7 +89,7 @@ public class MaxPriorityQueue<T extends Comparable<T>> {
      */
     private void swim(int k) {
         while (k > 1) {
-            if (less( k/2, k)) {
+            if (less( k,k/2)) {
                 exch(k/2, k);
                 k = k/2;
             } else {
@@ -99,35 +100,32 @@ public class MaxPriorityQueue<T extends Comparable<T>> {
     }
 
     /**
-     * 使用下沉算法，使索引k处的元素能在堆中处于一个正确的位置, 使用当前结点对比子节点中最大的结点
+     * 使用下沉算法，使索引k处的元素能在堆中处于一个正确的位置, 使用当前结点对比子节点中最小的结点
      * @param k
      */
     private void sink(int k) {
 
         // 至少要用左子结点才能进行下层
         while(k*2 <= N) {
-            int max;
+            int min;
             if (k*2+1 <= N) {
-                if (less(k*2, k*2+1)) {
-                    max = k*2+1;
+                if (less(k*2+1, k*2)) {
+                    min = k*2+1;
                 } else {
-                    max = k*2;
+                    min = k*2;
                 }
             } else {
-                max = k*2;
+                min = k*2;
             }
 
-            // 对比当前结点和最大的子结点
-            if (!less(k, max)) {
+            // 对比当前结点和最小的子结点
+            if (less(k, min)) {
                 break;
             }
             // 下沉
-            exch(k, max);
-            k = max;
+            exch(k, min);
+            k = min;
 
         }
     }
-
-
-
 }
