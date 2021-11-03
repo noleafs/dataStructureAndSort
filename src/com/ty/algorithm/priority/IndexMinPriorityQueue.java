@@ -36,12 +36,17 @@ public class IndexMinPriorityQueue<T extends Comparable<T>> {
             qp[i] = -1;
         }
 
-
     }
 
+    /**
+     *
+     * @param i pq堆的索引
+     * @param j pq堆的索引
+     * @return
+     */
     private boolean less(int i, int j) {
-        int i1 = qp[i];
-        int i2 = qp[j];
+        int i1 = pq[i];
+        int i2 = pq[j];
         return items[i1].compareTo(items[i2]) < 0;
     }
 
@@ -83,7 +88,13 @@ public class IndexMinPriorityQueue<T extends Comparable<T>> {
      * @param t
      */
     public void changeite(int i, T t) {
-
+        // 修改items数组中i位置元素为t
+        items[i] = t;
+        // 找到i在pq中出现的位置
+        int index = qp[i];
+        // 堆调整
+        sink(index);
+        swim(index);
     }
 
     /**
@@ -120,7 +131,6 @@ public class IndexMinPriorityQueue<T extends Comparable<T>> {
         // 需要对交换后的元素 进行堆有序调整
         sink(k);
         swim(k);
-
     }
 
 
@@ -176,7 +186,14 @@ public class IndexMinPriorityQueue<T extends Comparable<T>> {
      * @param k
      */
     private void swim(int k) {
-
+        while(k > 1) {
+            if (less(k, k/2)) {
+                exch(k, k/2);
+                k = k/2;
+            } else {
+                break;
+            }
+        }
     }
 
     /**
@@ -184,6 +201,29 @@ public class IndexMinPriorityQueue<T extends Comparable<T>> {
      * @param k
      */
     private void sink(int k) {
+        while (k*2 <= N) {
+            int min;
+            // 有右子结点
+            if (k*2+1 <= N) {
+                if (less(k*2, k*2+1)) {
+                    min = k*2;
+                } else {
+                    min = k*2+1;
+                }
+            } else {
+                min = k*2;
+            }
+
+
+            if (less(k, min)) {
+                break;
+            }
+
+            exch(k, min);
+            k = min;
+
+        }
+
 
     }
 
