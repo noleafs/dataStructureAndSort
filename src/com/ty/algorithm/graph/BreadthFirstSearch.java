@@ -4,6 +4,7 @@ package com.ty.algorithm.graph;
 import com.ty.algorithm.linear.Queue;
 
 /**
+ * 图搜索， 广度优先算法
  * @author tanyun
  * @description
  * @date 2021/11/2 20:05
@@ -19,7 +20,7 @@ public class BreadthFirstSearch {
      */
     private int count;
     /**
-     * 用来存储待搜索领接表的点
+     * 用来存储待搜索领接表的顶点
      */
     private Queue<Integer> waitSearch;
 
@@ -41,6 +42,7 @@ public class BreadthFirstSearch {
         marked[v] = true;
         count++;
         waitSearch.enqueue(v);
+
         while(true) {
             // 待搜索的顶点
             Integer i = waitSearch.dequeue();
