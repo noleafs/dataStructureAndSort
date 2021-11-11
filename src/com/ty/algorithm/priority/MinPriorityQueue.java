@@ -68,7 +68,7 @@ public class MinPriorityQueue<T extends Comparable<T>> {
     }
 
     /**
-     * 删除堆中最大的元素，并返回这个最大元素
+     * 删除堆中最小的元素，并返回这个最小元素
      * @return
      */
     public T delMin() {
