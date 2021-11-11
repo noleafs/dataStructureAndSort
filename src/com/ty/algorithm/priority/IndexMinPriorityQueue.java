@@ -137,7 +137,7 @@ public class IndexMinPriorityQueue<T extends Comparable<T>> {
 
     /**
      * 删除队列中最小的元素,并返回该元素关联的索引
-     * @return
+     * @return 索引
      */
     public int delMin() {
         int min = pq[1];

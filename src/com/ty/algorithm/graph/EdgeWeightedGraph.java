@@ -80,7 +80,6 @@ public class EdgeWeightedGraph {
         int w = e.other(v);
         adj[v].enqueue(e);
         adj[w].enqueue(e);
-
         E++;
     }
 
