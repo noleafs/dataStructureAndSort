@@ -43,7 +43,7 @@ public class KruskalMST {
 
         // 遍历pq队列，每次拿到权重最小的边，进行处理
         // 最小生成树的边的数量是顶点数量-1
-        while (!pq.isEmpty() && mst.size() < G.V()) {
+        while (!pq.isEmpty() && mst.size() < G.V()-1) {
             // 获取到权重最小的边
             Edge e = pq.delMin();
             // 找到该边的两个顶点
