@@ -3,6 +3,8 @@ package com.ty.algorithm.graph;
 import com.ty.algorithm.linear.Queue;
 import com.ty.algorithm.priority.IndexMinPriorityQueue;
 
+import java.util.Arrays;
+
 /**
  * PRIM算法实现最小生成树
  *
@@ -36,17 +38,14 @@ public class PrimMST {
         this.edgeTo = new Edge[G.V()];
         // 创建一个和图的顶点数一样大小的double数组，表示权重，并且初始化数组中的内容为无穷大，无穷大即表示不存在这样的边
         this.distTo = new double[G.V()];
-        for (int i = 0; i < distTo.length; i++) {
-            distTo[i] = Double.POSITIVE_INFINITY;
-        }
+        // 将distTo数组中每个元素填充为 第二个参数
+        Arrays.fill(distTo, Double.POSITIVE_INFINITY);
         // 创建一个和图的顶点数一样大小的boolean数组，表示当前顶点是否已经在最小树中
         this.marked = new boolean[G.V()];
         // 创建一个索引优先队列，存储有效横切边
         this.pq = new IndexMinPriorityQueue<>(G.V());
-
         // 默认让一个顶点进入最小树中
         pq.insert(0, 0.0);
-
         // 每次遍历获取到权重最小的横切边对应的顶点，并加入到最小生成树中
         while (!pq.isEmpty()) {
             visit(G, pq.delMin());

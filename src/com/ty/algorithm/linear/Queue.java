@@ -59,7 +59,6 @@ public class Queue<T> implements Iterable<T>{
             this.item = item;
             this.next = next;
         }
-
     }
 
     public boolean isEmpty() {
